@@ -94,6 +94,26 @@ void MakeDir(Directory* root,std::string ND){
     }
 
 }
+void MakeFile(Directory* root,std::string NF){
+    Directory* temp = root;
+
+    int i=0;
+    try {
+        while (i < temp->Dcount) {
+            if (temp->SubFile[i]->name == NF)
+                throw NF;
+            i++;
+        }
+        File* NewFile = new File;
+        NewFile->name = NF;
+        temp->SubFile[i] = NewFile;
+        temp->Fcount++;
+    }catch (std::string e){
+        std::cout << e << "는 이미 있는 파일명 입니다" << std::endl;
+    }
+
+}
+
 void List(Directory* root){
     Directory* temp = root;
     for(int i=0; i<temp->Dcount;i++){
@@ -130,9 +150,14 @@ int main() {
             std::string temp = cmd.substr(6);
             MakeDir(NL,temp);
         }
+        else if(cmd.rfind("touch", 0) == 0){
+            std::string temp = cmd.substr(6);
+            MakeFile(NL,temp);
+        }
         else if(cmd.rfind("ls", 0) == 0){
             List(NL);
         }
+
         else{
             std::cout << "가상 파일 탐색기 입니다\n명령어로는 ls,cd,mkdir,exit이 있습니다" << std::endl;
         }

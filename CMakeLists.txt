@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.24)
 project(untitled)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_C_FLAGS "-fexec-charset=CP949")
 
 add_executable(untitled main.cpp)
 if(${CMAKE_SYSTEM_NAME} MATCHES Windows)

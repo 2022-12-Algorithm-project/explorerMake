@@ -36,7 +36,6 @@ int search(Directory *root, const std::string &target) {
             return i;
     }
     return -1;
-
 }
 
 void macro(Directory *Root, const std::string &username) {

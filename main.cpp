@@ -2,7 +2,9 @@
 #include <string>
 #include <utility>
 #include <Windows.h>
+#include <functional>
 #include <iomanip>
+#include <algorithm>
 
 #define MaxDirCount 20
 #define MaxFileCount 20
@@ -82,6 +84,10 @@ void MakeDir(Directory *root, const std::string &ND) {
     Directory *temp = root;
     int i = 0;
     try {
+        if(ND.rfind(' ',0) == 0 || ND.empty()){
+            std::cout << "폴더명을 점검해 주십시오"<< std::endl;
+            return;
+        }
         while (i < temp->Dcount) {
             if (temp->SubDir[i]->name == ND)
                 throw ND;
@@ -193,9 +199,19 @@ Directory *Delete(Directory *root) {
 
 }
 
+bool customSort (Directory* i,Directory* j) {
+    char a = i->name[0];
+    char b = j->name[0];
+    return (a<b);
+}
+
+bool customSort2 (File* i,File* j) {
+    char a = i->name[0];
+    char b = j->name[0];
+    return (a<b);
+}
 
 int main() {
-
     std::cout << "유저 이름을 입력해주세요 : ";
     std::string Username;
     std::cin >> Username;
@@ -225,14 +241,40 @@ int main() {
                 std::cout << std::endl;
             } else if (cmd.rfind("finddir ", 0) == 0) {
                 std::string temp = cmd.substr(8);
-                findDir(NL, temp);
+                findDir(root, temp);
                 std::cout << std::endl;
             } else if (cmd.rfind("findfile ", 0) == 0) {
                 std::string temp = cmd.substr(9);
                 findFile(NL, temp);
                 std::cout << std::endl;
-            } else if (cmd.rfind("delete", 0) == 0) {
-                NL = Delete(NL);
+            } else if (cmd.rfind("delete ", 0) == 0) {
+                std::string temp = cmd.substr(7);
+                int index = search(NL,temp);
+                if(index != -1)
+                    Delete(NL->SubDir[index]);
+            }else if (cmd.rfind("delete", 0) == 0) {
+                if (!(NL->name == Username)) Delete(NL);
+                else {
+                    std::cout << "사용자 폴더는 지울 수 없습니다" << std::endl;
+                }
+            } else if (cmd.rfind("sort", 0) == 0) {
+                if (NL->Dcount == 0){
+                    std::cout << "폴더가 있어야 합니다" << std::endl;
+                    if (NL->Fcount == 0){
+                        std::cout << "파일가 있어야 합니다" << std::endl;
+                        continue;
+                    }else{
+                        std::sort(NL->SubFile,NL->SubFile+NL->Fcount, customSort2);
+                    }
+                    continue;
+                }else{
+                    std::sort(NL->SubDir,NL->SubDir+NL->Dcount, customSort);
+                    if (NL->Fcount == 0){
+                        continue;
+                    } else {
+                        std::sort(NL->SubFile, NL->SubFile + NL->Fcount, customSort2);
+                    }
+                }
             } else if (cmd.rfind("real ", 0) == 0) {
                 const char *temp = cmd.substr(5).data();
                 system(temp);
@@ -243,7 +285,8 @@ int main() {
                 std::cout << "touch %s       :: 현재 위치에 %s파일을 만듭니다" << std::endl;
                 std::cout << "finddir %s     :: 현재 위치에 있는 %s 폴더를 찾습니다" << std::endl;
                 std::cout << "findfile %s    :: 현재 위치에 있는 %s 파일을 찾습니다" << std::endl;
-                std::cout << "delete         :: 현재 위치의 폴더를 삭제 하고 전 폴더로 이동합니다" << std::endl;
+                std::cout << "delete (%s)    :: 현재 위치의 폴더를 삭제 하고 전 폴더로 이동합니다 (%s)가 존재할경우 그폴더를 지웁니다" << std::endl;
+                std::cout << "sort           :: 현재 위치 폴더와 파일 목록을 정렬합니다 정렬은 가/1/a 순입니다" << std::endl;
                 std::cout << "ls             :: 현재 위치 폴더와 파일 목록을 제공합니다" << std::endl;
                 std::cout << "pwd            :: root폴더부터 현재까지의 경로를 보여줍니다" << std::endl;
             } else {
@@ -253,7 +296,5 @@ int main() {
             std::cout << "에러가 발생했습니다 명령어를 점검해주십시오" << std::endl;
         }
     }
-
-
     return 0;
 }

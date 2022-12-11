@@ -291,6 +291,7 @@ int main() {
                 std::cout << "pwd            :: root폴더부터 현재까지의 경로를 보여줍니다" << std::endl;
             } else {
                 std::cout << cmd << " 명령어는 존재 하지 않습니다" << std::endl;
+                std::cout << "기능이 궁금하시다면 help를 사용해주십시오" << std::endl;
             }
         } catch (std::exception e) {
             std::cout << "에러가 발생했습니다 명령어를 점검해주십시오" << std::endl;

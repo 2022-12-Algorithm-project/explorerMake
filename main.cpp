@@ -59,7 +59,7 @@ Directory *ChangeDir(const std::string &CL, Directory *root) {
         Directory *temp = root;
         if (CL == "..") {
             if (!(temp->LastDir)) {
-                std::cout << "Ã³À½ µð·ºÅä¸® ÀÔ´Ï´Ù" << std::endl;
+                std::cout << "ì²˜ìŒ ë””ë ‰í† ë¦¬ ìž…ë‹ˆë‹¤" << std::endl;
                 return temp;
             } else {
                 temp = temp->LastDir;
@@ -71,11 +71,11 @@ Directory *ChangeDir(const std::string &CL, Directory *root) {
             temp = temp->SubDir[index];
             return temp;
         } else {
-            std::cout << "¾ø´Â µð·ºÅä¸® ÀÔ´Ï´Ù" << std::endl;
+            std::cout << "ì—†ëŠ” ë””ë ‰í† ë¦¬ ìž…ë‹ˆë‹¤" << std::endl;
             return temp;
         }
     } catch (std::exception e) {
-        std::cout << "¿¡·¯°¡ ¹ß»ýÇß½À´Ï´Ù ¸í·É¾î¸¦ Á¡°ËÇØÁÖ½Ê½Ã¿À" << std::endl;
+        std::cout << "ì—ëŸ¬ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤ ëª…ë ¹ì–´ë¥¼ ì ê²€í•´ì£¼ì‹­ì‹œì˜¤" << std::endl;
     }
 }
 
@@ -85,7 +85,7 @@ void MakeDir(Directory *root, const std::string &ND) {
     int i = 0;
     try {
         if(ND.rfind(' ',0) == 0 || ND.empty()){
-            std::cout << "Æú´õ¸íÀ» Á¡°ËÇØ ÁÖ½Ê½Ã¿À"<< std::endl;
+            std::cout << "í´ë”ëª…ì„ ì ê²€í•´ ì£¼ì‹­ì‹œì˜¤"<< std::endl;
             return;
         }
         while (i < temp->Dcount) {
@@ -98,7 +98,7 @@ void MakeDir(Directory *root, const std::string &ND) {
         temp->SubDir[i] = NewDir;
         temp->Dcount++;
     } catch (std::string e) {
-        std::cout << e << "´Â ÀÌ¹Ì ÀÖ´Â Æú´õ¸í ÀÔ´Ï´Ù" << std::endl;
+        std::cout << e << "ëŠ” ì´ë¯¸ ìžˆëŠ” í´ë”ëª… ìž…ë‹ˆë‹¤" << std::endl;
     }
 }
 
@@ -107,8 +107,7 @@ void MakeFile(Directory *root, const std::string &NF) {
     int i = 0;
     try {
         while (i < temp->Dcount) {
-            if (temp->SubFile[i]->name == NF)
-                throw NF;
+            if (temp->SubFile[i]->name == NF) throw NF;
             i++;
         }
         File *NewFile = new File;
@@ -116,7 +115,7 @@ void MakeFile(Directory *root, const std::string &NF) {
         temp->SubFile[i] = NewFile;
         temp->Fcount++;
     } catch (std::string e) {
-        std::cout << e << "´Â ÀÌ¹Ì ÀÖ´Â ÆÄÀÏ¸í ÀÔ´Ï´Ù" << std::endl;
+        std::cout << e << "ëŠ” ì´ë¯¸ ìžˆëŠ” íŒŒì¼ëª… ìž…ë‹ˆë‹¤" << std::endl;
     }
 }
 
@@ -146,7 +145,7 @@ void findDir(Directory *root, const std::string &target) {
         if (temp->SubDir[i]->name == target) return PWD(temp);
         i++;
     }
-    std::cout << "Ã£´Â Æú´õ°¡ ¾ø½À´Ï´Ù" << std::endl;
+    std::cout << "ì°¾ëŠ” í´ë”ê°€ ì—†ìŠµë‹ˆë‹¤" << std::endl;
 }
 
 void findFile(Directory *root, const std::string &target) {
@@ -160,7 +159,7 @@ void findFile(Directory *root, const std::string &target) {
         }
         i++;
     }
-    std::cout << "Ã£´Â Æú´õ°¡ ¾ø½À´Ï´Ù" << std::endl;
+    std::cout << "ì°¾ëŠ” í´ë”ê°€ ì—†ìŠµë‹ˆë‹¤" << std::endl;
 }
 
 void Del2(Directory *root, Directory *deleted) {
@@ -194,7 +193,7 @@ Directory *Delete(Directory *root) {
     }
     Del2(temp->LastDir, temp);
     delete (temp);
-    std::cout << "»èÁ¦ µÇ¾ú½À´Ï´Ù" << std::endl;
+    std::cout << "ì‚­ì œ ë˜ì—ˆìŠµë‹ˆë‹¤" << std::endl;
     return deleted;
 
 }
@@ -212,7 +211,7 @@ bool customSort2 (File* i,File* j) {
 }
 
 int main() {
-    std::cout << "À¯Àú ÀÌ¸§À» ÀÔ·ÂÇØÁÖ¼¼¿ä : ";
+    std::cout << "ìœ ì € ì´ë¦„ì„ ìž…ë ¥í•´ì£¼ì„¸ìš” : ";
     std::string Username;
     std::cin >> Username;
     system("cls");
@@ -255,13 +254,13 @@ int main() {
             }else if (cmd.rfind("delete", 0) == 0) {
                 if (!(NL->name == Username)) Delete(NL);
                 else {
-                    std::cout << "»ç¿ëÀÚ Æú´õ´Â Áö¿ï ¼ö ¾ø½À´Ï´Ù" << std::endl;
+                    std::cout << "ì‚¬ìš©ìž í´ë”ëŠ” ì§€ìš¸ ìˆ˜ ì—†ìŠµë‹ˆë‹¤" << std::endl;
                 }
             } else if (cmd.rfind("sort", 0) == 0) {
                 if (NL->Dcount == 0){
-                    std::cout << "Æú´õ°¡ ÀÖ¾î¾ß ÇÕ´Ï´Ù" << std::endl;
+                    std::cout << "í´ë”ê°€ ìžˆì–´ì•¼ í•©ë‹ˆë‹¤" << std::endl;
                     if (NL->Fcount == 0){
-                        std::cout << "ÆÄÀÏ°¡ ÀÖ¾î¾ß ÇÕ´Ï´Ù" << std::endl;
+                        std::cout << "íŒŒì¼ê°€ ìžˆì–´ì•¼ í•©ë‹ˆë‹¤" << std::endl;
                         continue;
                     }else{
                         std::sort(NL->SubFile,NL->SubFile+NL->Fcount, customSort2);
@@ -279,22 +278,22 @@ int main() {
                 const char *temp = cmd.substr(5).data();
                 system(temp);
             } else if (cmd.rfind("help", 0) == 0) {
-                std::cout << "°¡»ó ÆÄÀÏ Å½»ö±â ÀÔ´Ï´Ù\n¸í·É¾î : " << std::endl;
-                std::cout << "cd %s          :: %sÆú´õ·Î ÀÌµ¿ÇÕ´Ï´Ù" << std::endl;
-                std::cout << "mkdir %s       :: ÇöÀç À§Ä¡¿¡ %sÆú´õ¸¦ ¸¸µì´Ï´Ù" << std::endl;
-                std::cout << "touch %s       :: ÇöÀç À§Ä¡¿¡ %sÆÄÀÏÀ» ¸¸µì´Ï´Ù" << std::endl;
-                std::cout << "finddir %s     :: ÇöÀç À§Ä¡¿¡ ÀÖ´Â %s Æú´õ¸¦ Ã£½À´Ï´Ù" << std::endl;
-                std::cout << "findfile %s    :: ÇöÀç À§Ä¡¿¡ ÀÖ´Â %s ÆÄÀÏÀ» Ã£½À´Ï´Ù" << std::endl;
-                std::cout << "delete (%s)    :: ÇöÀç À§Ä¡ÀÇ Æú´õ¸¦ »èÁ¦ ÇÏ°í Àü Æú´õ·Î ÀÌµ¿ÇÕ´Ï´Ù (%s)°¡ Á¸ÀçÇÒ°æ¿ì ±×Æú´õ¸¦ Áö¿ó´Ï´Ù" << std::endl;
-                std::cout << "sort           :: ÇöÀç À§Ä¡ Æú´õ¿Í ÆÄÀÏ ¸ñ·ÏÀ» Á¤·ÄÇÕ´Ï´Ù Á¤·ÄÀº °¡/1/a ¼øÀÔ´Ï´Ù" << std::endl;
-                std::cout << "ls             :: ÇöÀç À§Ä¡ Æú´õ¿Í ÆÄÀÏ ¸ñ·ÏÀ» Á¦°øÇÕ´Ï´Ù" << std::endl;
-                std::cout << "pwd            :: rootÆú´õºÎÅÍ ÇöÀç±îÁöÀÇ °æ·Î¸¦ º¸¿©ÁÝ´Ï´Ù" << std::endl;
+                std::cout << "ê°€ìƒ íŒŒì¼ íƒìƒ‰ê¸° ìž…ë‹ˆë‹¤\nëª…ë ¹ì–´ : " << std::endl;
+                std::cout << "cd %s          :: %sí´ë”ë¡œ ì´ë™í•©ë‹ˆë‹¤" << std::endl;
+                std::cout << "mkdir %s       :: í˜„ìž¬ ìœ„ì¹˜ì— %sí´ë”ë¥¼ ë§Œë“­ë‹ˆë‹¤" << std::endl;
+                std::cout << "touch %s       :: í˜„ìž¬ ìœ„ì¹˜ì— %síŒŒì¼ì„ ë§Œë“­ë‹ˆë‹¤" << std::endl;
+                std::cout << "finddir %s     :: í˜„ìž¬ ìœ„ì¹˜ì— ìžˆëŠ” %s í´ë”ë¥¼ ì°¾ìŠµë‹ˆë‹¤" << std::endl;
+                std::cout << "findfile %s    :: í˜„ìž¬ ìœ„ì¹˜ì— ìžˆëŠ” %s íŒŒì¼ì„ ì°¾ìŠµë‹ˆë‹¤" << std::endl;
+                std::cout << "delete (%s)    :: í˜„ìž¬ ìœ„ì¹˜ì˜ í´ë”ë¥¼ ì‚­ì œ í•˜ê³  ì „ í´ë”ë¡œ ì´ë™í•©ë‹ˆë‹¤ (%s)ê°€ ì¡´ìž¬í• ê²½ìš° ê·¸í´ë”ë¥¼ ì§€ì›ë‹ˆë‹¤" << std::endl;
+                std::cout << "sort           :: í˜„ìž¬ ìœ„ì¹˜ í´ë”ì™€ íŒŒì¼ ëª©ë¡ì„ ì •ë ¬í•©ë‹ˆë‹¤ ì •ë ¬ì€ ê°€/1/a ìˆœìž…ë‹ˆë‹¤" << std::endl;
+                std::cout << "ls             :: í˜„ìž¬ ìœ„ì¹˜ í´ë”ì™€ íŒŒì¼ ëª©ë¡ì„ ì œê³µí•©ë‹ˆë‹¤" << std::endl;
+                std::cout << "pwd            :: rootí´ë”ë¶€í„° í˜„ìž¬ê¹Œì§€ì˜ ê²½ë¡œë¥¼ ë³´ì—¬ì¤ë‹ˆë‹¤" << std::endl;
             } else {
-                std::cout << cmd << " ¸í·É¾î´Â Á¸Àç ÇÏÁö ¾Ê½À´Ï´Ù" << std::endl;
-                std::cout << "±â´ÉÀÌ ±Ã±ÝÇÏ½Ã´Ù¸é help¸¦ »ç¿ëÇØÁÖ½Ê½Ã¿À" << std::endl;
+                std::cout << cmd << " ëª…ë ¹ì–´ëŠ” ì¡´ìž¬ í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤" << std::endl;
+                std::cout << "ê¸°ëŠ¥ì´ ê¶ê¸ˆí•˜ì‹œë‹¤ë©´ helpë¥¼ ì‚¬ìš©í•´ì£¼ì‹­ì‹œì˜¤" << std::endl;
             }
         } catch (std::exception e) {
-            std::cout << "¿¡·¯°¡ ¹ß»ýÇß½À´Ï´Ù ¸í·É¾î¸¦ Á¡°ËÇØÁÖ½Ê½Ã¿À" << std::endl;
+            std::cout << "ì—ëŸ¬ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤ ëª…ë ¹ì–´ë¥¼ ì ê²€í•´ì£¼ì‹­ì‹œì˜¤" << std::endl;
         }
     }
     return 0;
